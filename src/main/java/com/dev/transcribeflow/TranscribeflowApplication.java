@@ -9,5 +9,4 @@ public class TranscribeflowApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TranscribeflowApplication.class, args);
 	}
-
 }
