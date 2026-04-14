@@ -3,6 +3,7 @@ package com.dev.transcribeflow.auth;
 import com.dev.transcribeflow.auth.dto.request.RegisterRequestDTO;
 import com.dev.transcribeflow.auth.dto.response.AuthResponseDTO;
 import com.dev.transcribeflow.auth.mapper.UserMapper;
+import com.dev.transcribeflow.core.exception.EmailAlreadyExistsException;
 import com.dev.transcribeflow.core.utils.MessageUtils;
 import com.dev.transcribeflow.user.Role;
 import com.dev.transcribeflow.user.UserEntity;
@@ -31,7 +32,7 @@ public class AuthService implements IAuthService{
         log.info("Registering: {}", registerRequestDTO.email());
 
         if(userRepository.existsByEmail(registerRequestDTO.email())){
-            throw new RuntimeException(messageUtils.getMessage(
+            throw new EmailAlreadyExistsException(messageUtils.getMessage(
                     "auth.register.error.email_exists",
                     registerRequestDTO.email()));
         }
@@ -47,6 +48,5 @@ public class AuthService implements IAuthService{
 
         return userMapper.toResponse(savedUser, messageUtils.getMessage("auth.register.success"));
     }
-
 
 }
