@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class AuthService {
+public class AuthService implements IAuthService{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
