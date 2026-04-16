@@ -1,4 +1,4 @@
-package com.dev.transcribeflow.core.token;
+package com.dev.transcribeflow.core.security.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

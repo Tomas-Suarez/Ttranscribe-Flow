@@ -1,6 +1,6 @@
 package com.dev.transcribeflow.core.filter;
 
-import com.dev.transcribeflow.core.token.JwtService;
+import com.dev.transcribeflow.core.security.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

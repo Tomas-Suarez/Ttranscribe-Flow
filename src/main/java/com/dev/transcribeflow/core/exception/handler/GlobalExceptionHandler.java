@@ -2,6 +2,8 @@ package com.dev.transcribeflow.core.exception.handler;
 
 import com.dev.transcribeflow.core.exception.CustomException;
 import com.dev.transcribeflow.core.exception.EmailAlreadyExistsException;
+import com.dev.transcribeflow.core.exception.EmailNotFoundException;
+import com.dev.transcribeflow.core.exception.ExpireTokenException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ public class GlobalExceptionHandler {
 
     public GlobalExceptionHandler() {
         exceptionStatusMap.put(EmailAlreadyExistsException.class, HttpStatus.CONFLICT);
+        exceptionStatusMap.put(EmailNotFoundException.class, HttpStatus.NOT_FOUND);
+        exceptionStatusMap.put(ExpireTokenException.class, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(CustomException.class)
