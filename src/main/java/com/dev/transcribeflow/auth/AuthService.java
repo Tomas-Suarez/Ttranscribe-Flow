@@ -4,15 +4,19 @@ import com.dev.transcribeflow.auth.dto.request.RegisterRequestDTO;
 import com.dev.transcribeflow.auth.dto.response.AuthResponseDTO;
 import com.dev.transcribeflow.auth.mapper.UserMapper;
 import com.dev.transcribeflow.core.exception.EmailAlreadyExistsException;
+import com.dev.transcribeflow.core.token.JwtService;
 import com.dev.transcribeflow.core.utils.MessageUtils;
 import com.dev.transcribeflow.user.Role;
 import com.dev.transcribeflow.user.UserEntity;
 import com.dev.transcribeflow.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class AuthService implements IAuthService{
 
@@ -20,13 +24,6 @@ public class AuthService implements IAuthService{
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final MessageUtils messageUtils;
-
-    public AuthService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, MessageUtils messageUtils) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-        this.messageUtils = messageUtils;
-    }
 
     public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO){
         log.info("Registering: {}", registerRequestDTO.email());
