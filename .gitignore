@@ -5,7 +5,21 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### STS ###
+**/venv/
+**/env/
+**/.venv/
+
+**/__pycache__/
+**/*.py[cod]
+**/*.$py.class
+
+**/*.tmp
+**/temp_*.mp3
+**/temp_*.wav
+
+**/.cache/huggingface/
+**/models/
+
 .apt_generated
 .classpath
 .factorypath
@@ -17,7 +31,6 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
@@ -26,13 +39,14 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### NetBeans ###
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
 .vscode/
 .env
+
+.DS_Store
+Thumbs.db
