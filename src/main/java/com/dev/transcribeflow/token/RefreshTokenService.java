@@ -1,5 +1,6 @@
 package com.dev.transcribeflow.token;
 
+import com.dev.transcribeflow.auth.dto.request.RefreshTokenRequestDTO;
 import com.dev.transcribeflow.core.exception.EmailNotFoundException;
 import com.dev.transcribeflow.core.exception.ExpireTokenException;
 import com.dev.transcribeflow.core.utils.MessageUtils;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -33,6 +35,9 @@ public class RefreshTokenService {
                         messageUtils.getMessage(
                                 "auth.login.error.email_not_found",
                                 email)));
+
+        refreshTokenRepository.deleteByUserId(user.getId());
+        refreshTokenRepository.flush();
 
         RefreshTokenEntity refreshToken = RefreshTokenEntity.builder()
                 .user(user)
@@ -59,6 +64,16 @@ public class RefreshTokenService {
                     "auth.token.error.expired"));
         }
         return token;
+    }
+
+    @Transactional
+    public void deleteByToken(String token){
+        log.debug("Attempting to delete refresh token");
+        refreshTokenRepository.findByToken(token)
+                .ifPresent(tokenEntity -> {
+                    refreshTokenRepository.delete(tokenEntity);
+                    log.info("Refresh token for user {} deleted successfully", tokenEntity.getUser().getEmail());
+                });
     }
 
 }
