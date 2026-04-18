@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
         exceptionStatusMap.put(ExpireTokenException.class, HttpStatus.UNAUTHORIZED);
         exceptionStatusMap.put(BadCredentialsException.class, HttpStatus.UNAUTHORIZED);
         exceptionStatusMap.put(TokenNotFoundException.class, HttpStatus.NOT_FOUND);
+        exceptionStatusMap.put(AiEngineException.class, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(CustomException.class)

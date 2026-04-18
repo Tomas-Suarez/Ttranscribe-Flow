@@ -22,5 +22,47 @@ services:
     depends_on:
       - db
 
+  ai-engine:
+    build:
+      context: ./ai-engine
+      dockerfile: Dockerfile
+    container_name: transcribeflow-ai
+    restart: always
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+
+  backend-java:
+    build:
+      context: .
+    container_name: transcribeflow-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+      - AI_HOST=${AI_HOST}
+      - AI_PORT=${AI_PORT}
+
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}
+      - JWT_REFRESH_EXPIRATION_TIME=${JWT_REFRESH_EXPIRATION_TIME}
+    depends_on:
+      - db
+      - ai-engine
+
 volumes:
   postgres_data:
