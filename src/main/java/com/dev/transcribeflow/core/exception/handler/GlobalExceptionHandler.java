@@ -28,6 +28,11 @@ public class GlobalExceptionHandler {
         exceptionStatusMap.put(BadCredentialsException.class, HttpStatus.UNAUTHORIZED);
         exceptionStatusMap.put(TokenNotFoundException.class, HttpStatus.NOT_FOUND);
         exceptionStatusMap.put(AiEngineException.class, HttpStatus.SERVICE_UNAVAILABLE);
+        exceptionStatusMap.put(SubscriptionAlreadyExistsException.class, HttpStatus.CONFLICT);
+        exceptionStatusMap.put(SubscriptionInvalidPayloadException.class, HttpStatus.BAD_REQUEST);
+        exceptionStatusMap.put(SubscriptionNotFoundException.class, HttpStatus.NOT_FOUND);
+        exceptionStatusMap.put(UserNotFoundException.class, HttpStatus.NOT_FOUND);
+        exceptionStatusMap.put(SubscriptionStateConflictException.class, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(CustomException.class)

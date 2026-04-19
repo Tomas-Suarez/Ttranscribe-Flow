@@ -12,6 +12,7 @@ import com.dev.transcribeflow.core.exception.TokenNotFoundException;
 import com.dev.transcribeflow.core.security.principal.SecurityUser;
 import com.dev.transcribeflow.core.security.service.JwtService;
 import com.dev.transcribeflow.core.utils.MessageUtils;
+import com.dev.transcribeflow.subscription.SubscriptionService;
 import com.dev.transcribeflow.token.RefreshTokenEntity;
 import com.dev.transcribeflow.token.RefreshTokenService;
 import com.dev.transcribeflow.user.Role;
@@ -37,6 +38,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
+    private final SubscriptionService subscriptionService;
 
     public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO){
         log.debug("Registering: {}", registerRequestDTO.email());
@@ -56,6 +58,8 @@ public class AuthService {
         UserEntity savedUser = userRepository.save(user);
 
         log.info("User registered successfully with ID: {}", savedUser.getId());
+
+        subscriptionService.createDefaultSubscription(savedUser.getId());
 
         return userMapper.toResponse(savedUser, messageUtils.getMessage("auth.register.success"));
     }
