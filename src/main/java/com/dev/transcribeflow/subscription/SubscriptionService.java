@@ -35,6 +35,7 @@ public class SubscriptionService {
         SubscriptionEntity subscription = SubscriptionEntity.builder()
                 .planType(PlanType.FREE)
                 .status(SubscriptionStatus.ACTIVE)
+                .remainingSeconds(PlanType.FREE.getMonthlySecondsLimit())
                 .user(user)
                 .build();
 
@@ -64,6 +65,7 @@ public class SubscriptionService {
 
         SubscriptionEntity subscription = getActiveSubscription(userId);
         subscription.setPlanType(newPlan);
+        subscription.setRemainingSeconds(newPlan.getMonthlySecondsLimit());
         return subscriptionRepository.save(subscription);
     }
 

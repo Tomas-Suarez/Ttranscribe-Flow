@@ -29,6 +29,9 @@ public class SubscriptionEntity {
     @Column(name = "status", nullable = false)
     private SubscriptionStatus status;
 
+    @Column(name = "remaining_seconds", nullable = false)
+    private Integer remainingSeconds;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
