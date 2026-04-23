@@ -56,7 +56,7 @@ public class SubscriptionService {
     }
 
     @Transactional
-    public void updatePlan(UUID userId, PlanType newPlan) {
+    public SubscriptionEntity updatePlan(UUID userId, PlanType newPlan) {
         if (newPlan == null) {
             throw new SubscriptionInvalidPayloadException(
                     messageUtils.getMessage("subscription.error.invalid_payload"));
@@ -64,12 +64,11 @@ public class SubscriptionService {
 
         SubscriptionEntity subscription = getActiveSubscription(userId);
         subscription.setPlanType(newPlan);
-        subscriptionRepository.save(subscription);
-        log.info("Plan updated to {} for user: {}", newPlan, userId);
+        return subscriptionRepository.save(subscription);
     }
 
     @Transactional
-    public void cancelSubscription(UUID userId) {
+    public SubscriptionEntity cancelSubscription(UUID userId) {
         SubscriptionEntity subscription = getActiveSubscription(userId);
 
         if (subscription.getStatus() == SubscriptionStatus.CANCELED) {
@@ -78,8 +77,8 @@ public class SubscriptionService {
         }
 
         subscription.setStatus(SubscriptionStatus.CANCELED);
-        subscriptionRepository.save(subscription);
         log.info("Subscription canceled for user: {}", userId);
+        return subscriptionRepository.save(subscription);
     }
 
 }
